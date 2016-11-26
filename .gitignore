@@ -45,3 +45,11 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Binary build files
+*.exe
+*.o
+
+# Code::Blocks configuration files
+*.depend
+*.layout
