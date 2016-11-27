@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 
-#define ROWS 10
+#define ROWS 100
 #define COLUMNS 65536 // 2x 32768 since storing by nibble vs. byte
 
 // Function prototypes:
