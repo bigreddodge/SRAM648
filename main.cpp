@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <tchar.h>
-#include "Serial.h"	// Library described above
+#include "Serial.h"
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -11,7 +11,6 @@
 // Function prototypes:
 void printStatus();
 void processData();
-void writeDataFiles();
 int ascii2int(char ascii);
 
 // SRAM data storage 2D array
@@ -63,7 +62,6 @@ int _tmain(int argc, _TCHAR* argv[]){
                 if ((row == (ROWS - 1)) && (col == COLUMNS)){
                     std::cout << "DONE.";
                     processData();
-                    //writeDataFiles();
                     return 0;
                 }
             }
@@ -87,6 +85,7 @@ void printStatus(){
 }
 
 void processData(){
+    int prob1ctr = 0;
     std::fstream raw(filename[0], std::fstream::out);
     std::fstream hex(filename[1], std::fstream::out);
     std::fstream prb(filename[2], std::fstream::out);
@@ -122,8 +121,12 @@ void processData(){
             else
                 raw << char(10);
         }
+            double prob = counter[c] / (double)ROWS;
+            if (prob == int(prob))
+                prob1ctr++;
             prb << counter[c] / (double)ROWS << char(10);   //Write probability output
     }
+    prb << char(10) << prob1ctr;
     raw.close();
     hex.close();
     prb.close();
@@ -138,25 +141,3 @@ int ascii2int(char ascii){
     else
         return (i-55);
 }
-
-//void writeDataFiles(){
-//    std::cout << "\nWriting data...";
-//    std::fstream fs;
-//    fs.open("data.csv", std::fstream::out);
-//    for (int c = 0; c < COLUMNS; c++){
-//        for (int r = 0; r < ROWS; r++){
-//            fs << SRAM_DATA[r][c];
-//            if (r < (ROWS-1))
-//                fs << ',';
-//        }
-//        fs <<  char(10);
-//    }
-//    fs.close();
-//    fs.open("prob.csv", std::fstream::out);
-//    for (int p = 0; p < COLUMNS * 4; p++){
-//        fs << counter[p]/(double)ROWS << char(10);
-//    }
-//    fs.close();
-//    std::cout << "DONE.";
-//}
-
